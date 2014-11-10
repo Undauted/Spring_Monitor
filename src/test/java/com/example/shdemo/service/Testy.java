@@ -25,7 +25,6 @@ public class Testy {
 	PrawnikManager prawnikManager;
 
 	private final String IMIE = "Andrzej";
-
 	private final int WIEK=12;
 	private final String NAZWISKO = "Miły";
 	
@@ -63,8 +62,6 @@ public class Testy {
 		prawnikManager.addPrawnik(prawnik);
 
 		prawnikManager.deletePrawnik(prawnik);
-		
-	
 		
 		assertNull(prawnikManager.findPrawnikById(prawnik.getId()));
 		
@@ -107,7 +104,11 @@ public class Testy {
 		
 		prawnikManager.addPrawnik(prawnik);
 		
-		assertNotNull(prawnikManager.findPrawnikById(prawnik.getId()));		
+		assertNotNull(prawnikManager.findPrawnikById(prawnik.getId()));	
+		
+		prawnikManager.deletePrawnik(prawnik);
+		
+		assertNull(prawnikManager.findPrawnikById(prawnik.getId()));
 	}
 //-------------------SZUKANIE WSZYSTKICH PRAWNIKÓW----------------
 	@Test
