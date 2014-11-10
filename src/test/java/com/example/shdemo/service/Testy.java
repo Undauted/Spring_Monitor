@@ -138,7 +138,16 @@ public class Testy {
 		
 		prawnikManager.addPrawnik(prawnik);
 		
+		Prawnik prawnik1 = new Prawnik();
+		prawnik1.setImie(IMIE);
+		prawnik1.setNazwisko(NAZWISKO);
+		prawnik1.setWiek(WIEK);
+		
+		prawnikManager.addPrawnik(prawnik1);
+		
 		List<Prawnik> praw = prawnikManager.getAllPrawnik();
+		assertEquals(2, praw.size());
+		
 		for (Prawnik prawnika : praw) {
 			if (prawnika.getId().equals(prawnik.getId())) {
 				assertEquals(IMIE,prawnika.getImie());
@@ -159,6 +168,9 @@ public class Testy {
 				assertEquals(WIEK,prawnika.getWiek());
 			}
 		}
+		
+		assertNotSame(NAZWISKO,prawnik1.getImie());
+		assertNotSame(IMIE,prawnik1.getNazwisko());
 		
 		
 	}
