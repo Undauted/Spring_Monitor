@@ -16,29 +16,29 @@ import com.example.shdemo.domain.Prawnik;
 public class PrawnikManagerHibernat implements PrawnikManager {
 
 	@Autowired
-	private SessionFactory sessionFactory;
+	private SessionFactory session;
 
 	public SessionFactory getSessionFactory() {
-		return sessionFactory;
+		return session;
 	}
 
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+	public void setSessionFactory(SessionFactory session) {
+		this.session = session;
 	}
 	
 	@Override
 	public void addPrawnik(Prawnik prawnik) {
 		prawnik.setId(null);
-		sessionFactory.getCurrentSession().persist(prawnik);
+		session.getCurrentSession().persist(prawnik);
 	}
 	
 	@Override
 	public void deletePrawnik(Prawnik prawnik) {
-		prawnik = (Prawnik) sessionFactory.getCurrentSession().get(Prawnik.class,
+		prawnik = (Prawnik) session.getCurrentSession().get(Prawnik.class,
 				prawnik.getId());
 		
 		
-		sessionFactory.getCurrentSession().delete(prawnik);
+		session.getCurrentSession().delete(prawnik);
 	}
 
 	
@@ -46,20 +46,20 @@ public class PrawnikManagerHibernat implements PrawnikManager {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Prawnik> getAllPrawnik() {
-		return sessionFactory.getCurrentSession().getNamedQuery("prawnik.all")
+		return session.getCurrentSession().getNamedQuery("prawnik.all")
 				.list();
 	}
 
 	@Override
 	public Prawnik findPrawnikById(Long id) {
-		return (Prawnik) sessionFactory.getCurrentSession().getNamedQuery("prawnik.byId").setLong("id", id).uniqueResult();
+		return (Prawnik) session.getCurrentSession().getNamedQuery("prawnik.byId").setLong("id", id).uniqueResult();
 	}
 
 	public void editPrawnik(Prawnik prawnik)
 	{
 		if(prawnik.getId() != null)
 		{
-		sessionFactory.getCurrentSession().persist(prawnik);
+			session.getCurrentSession().persist(prawnik);
 		}
 	}
 	
