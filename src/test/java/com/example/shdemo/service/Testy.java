@@ -13,7 +13,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import com.example.shdemo.domain.Prawnik;
+import com.example.shdemo.domain.Monitor;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/beans.xml" })
@@ -22,155 +22,169 @@ import com.example.shdemo.domain.Prawnik;
 public class Testy {
 
 	@Autowired
-	PrawnikManager prawnikManager;
+	MonitorManager monitorManager;
 
-	private final String IMIE = "Andrzej";
-	private final int WIEK=12;
-	private final String NAZWISKO = "Miły";
+	private final String NAZWA = "Dell U2412M";
+	private final String RODZAJ = "LED";
+	private final int PRZEKATNA=22;
+	private final int WAGA=3;
 	
-//-------------------DODAWANIE PRAWNIKA---------------------------
+	
+//-------------------DODAWANIE MONITORA---------------------------
 	@Test
-	public void addPrawnikCheck() {
+	public void addMonitorCheck() {
 
 
-		Prawnik prawnik = new Prawnik();
-		prawnik.setImie(IMIE);
-		prawnik.setNazwisko(NAZWISKO);
-		prawnik.setWiek(WIEK);
+		Monitor monitor = new Monitor();
+		monitor.setNazwa(NAZWA);
+		monitor.setRodzaj(RODZAJ);
+		monitor.setPrzekatna(PRZEKATNA);
+		monitor.setWaga(WAGA);
 		
-		prawnikManager.addPrawnik(prawnik);
+		monitorManager.addMonitor(monitor);
 		
-		List<Prawnik> praw = prawnikManager.getAllPrawnik();
-		for (Prawnik prawnika : praw) {
-			if (prawnika.getId().equals(prawnik.getId())) {
-				assertEquals(IMIE,prawnika.getImie());
-				assertEquals(NAZWISKO,prawnika.getNazwisko());
-				assertEquals(WIEK,prawnika.getWiek());
+		List<Monitor> monit = monitorManager.getAllMonitor();
+		for (Monitor monitory : monit) {
+			if (monitory.getId().equals(monitor.getId())) {
+				assertEquals(NAZWA,monitory.getNazwa());
+				assertEquals(RODZAJ,monitory.getRodzaj());
+				assertEquals(PRZEKATNA,monitory.getPrzekatna());
+				assertEquals(WAGA,monitory.getWaga());
+				
 			}
 		}
 	}
-//-------------------USUWANIE PRAWNIKA PO ID----------------------
+//-------------------USUWANIE MONITORA PO ID----------------------
 	@Test
-	public void deletePrawnikCheck() {
+	public void deleteMonitorCheck() {
 		
 		
-		Prawnik prawnik = new Prawnik();
-		prawnik.setImie(IMIE);
-		prawnik.setNazwisko(NAZWISKO);
-		prawnik.setWiek(WIEK);
+		Monitor monitor = new Monitor();
+		monitor.setNazwa(NAZWA);
+		monitor.setRodzaj(RODZAJ);
+		monitor.setPrzekatna(PRZEKATNA);
+		monitor.setWaga(WAGA);
 		
-		prawnikManager.addPrawnik(prawnik);
+		monitorManager.addMonitor(monitor);
 
-		prawnikManager.deletePrawnik(prawnik);
+		monitorManager.deleteMonitor(monitor);
 		
-		assertNull(prawnikManager.findPrawnikById(prawnik.getId()));
+		assertNull(monitorManager.findMonitorById(monitor.getId()));
 		
-		List<Prawnik> praw = prawnikManager.getAllPrawnik();
+		List<Monitor> praw = monitorManager.getAllMonitor();
 		assertEquals(0, praw.size());
 //----------------------------------------------------------------------------------	
 		
-		Prawnik prawnik1 = new Prawnik();
-		prawnik1.setImie(IMIE);
-		prawnik1.setNazwisko(NAZWISKO);
-		prawnik1.setWiek(WIEK);
+		Monitor monitor1 = new Monitor();
+		monitor1.setNazwa(NAZWA);
+		monitor1.setRodzaj(RODZAJ);
+		monitor1.setPrzekatna(PRZEKATNA);
+		monitor1.setWaga(WAGA);
 		
-		prawnikManager.addPrawnik(prawnik1);
+		monitorManager.addMonitor(monitor1);
 		
-		Prawnik prawnik2 = new Prawnik();
-		prawnik2.setImie(IMIE);
-		prawnik2.setNazwisko(NAZWISKO);
-		prawnik2.setWiek(WIEK);
+		Monitor monitor2 = new Monitor();
+		monitor2.setNazwa(NAZWA);
+		monitor2.setRodzaj(RODZAJ);
+		monitor2.setPrzekatna(PRZEKATNA);
+		monitor2.setWaga(WAGA);
 		
-		prawnikManager.addPrawnik(prawnik2);
+		monitorManager.addMonitor(monitor2);
 		
-		List<Prawnik> praw1 = prawnikManager.getAllPrawnik();
+		List<Monitor> monit1 = monitorManager.getAllMonitor();
 		
-		assertEquals(2, praw1.size());
+		assertEquals(2, monit1.size());
 		
-		prawnikManager.deletePrawnik(prawnik1);
-		assertNull(prawnikManager.findPrawnikById(prawnik1.getId()));
+		monitorManager.deleteMonitor(monitor1);
+		assertNull(monitorManager.findMonitorById(monitor1.getId()));
 		
-		List<Prawnik> praw2 = prawnikManager.getAllPrawnik();
+		List<Monitor> praw2 = monitorManager.getAllMonitor();
 		assertEquals(1, praw2.size());
 		}
-//-------------------SZUKANIE JEDNEGO PRAWNIKA PO ID--------------
+//-------------------SZUKANIE JEDNEGO MONITORA PO ID--------------
 	@Test
-	public void findOnePrawnikCheck() {
+	public void findOneMonitorCheck() {
 		
-		Prawnik prawnik = new Prawnik();
-		prawnik.setImie(IMIE);
-		prawnik.setNazwisko(NAZWISKO);
-		prawnik.setWiek(WIEK);
+		Monitor monitor = new Monitor();
+		monitor.setNazwa(NAZWA);
+		monitor.setRodzaj(RODZAJ);
+		monitor.setPrzekatna(PRZEKATNA);
+		monitor.setWaga(WAGA);
 		
-		prawnikManager.addPrawnik(prawnik);
+		monitorManager.addMonitor(monitor);
 		
-		assertNotNull(prawnikManager.findPrawnikById(prawnik.getId()));	
+		assertNotNull(monitorManager.findMonitorById(monitor.getId()));	
 		
-		prawnikManager.deletePrawnik(prawnik);
+		monitorManager.deleteMonitor(monitor);
 		
-		assertNull(prawnikManager.findPrawnikById(prawnik.getId()));
+		assertNull(monitorManager.findMonitorById(monitor.getId()));
 	}
-//-------------------SZUKANIE WSZYSTKICH PRAWNIKÓW----------------
+//-------------------SZUKANIE WSZYSTKICH MONITORÓW----------------
 	@Test
-	public void findAllPrawnikCheck() {
+	public void findAllMonitorCheck() {
 		
-		Prawnik prawnik = new Prawnik();
-		prawnik.setImie(IMIE);
-		prawnik.setNazwisko(NAZWISKO);
-		prawnik.setWiek(WIEK);
+		Monitor monitor = new Monitor();
+		monitor.setNazwa(NAZWA);
+		monitor.setRodzaj(RODZAJ);
+		monitor.setPrzekatna(PRZEKATNA);
+		monitor.setWaga(WAGA);
 		
-		prawnikManager.addPrawnik(prawnik);
+		monitorManager.addMonitor(monitor);
 		
-		List<Prawnik> praw = prawnikManager.getAllPrawnik();
+		List<Monitor> monit = monitorManager.getAllMonitor();
 		
-		assertNotNull(praw);
-		assertEquals(1, praw.size());
+		assertNotNull(monit);
+		assertEquals(1, monit.size());
 		
 	}
-//-------------------EDYCJA PRAWNIKA------------------------------
+//-------------------EDYCJA MONITORA------------------------------
 	@Test
-	public void editPrawnikCheck() {
+	public void editMonitorCheck() {
 		
-		Prawnik prawnik = new Prawnik();
-		prawnik.setImie(IMIE);
-		prawnik.setNazwisko(NAZWISKO);
-		prawnik.setWiek(WIEK);
+		Monitor monitor = new Monitor();
+		monitor.setNazwa(NAZWA);
+		monitor.setRodzaj(RODZAJ);
+		monitor.setPrzekatna(PRZEKATNA);
+		monitor.setWaga(WAGA);
 		
-		prawnikManager.addPrawnik(prawnik);
+		monitorManager.addMonitor(monitor);
 		
-		Prawnik prawnik1 = new Prawnik();
-		prawnik1.setImie(IMIE);
-		prawnik1.setNazwisko(NAZWISKO);
-		prawnik1.setWiek(WIEK);
+		Monitor monitor1 = new Monitor();
+		monitor1.setNazwa(NAZWA);
+		monitor1.setRodzaj(RODZAJ);
+		monitor1.setPrzekatna(PRZEKATNA);
+		monitor1.setWaga(WAGA);
 		
-		prawnikManager.addPrawnik(prawnik1);
+		monitorManager.addMonitor(monitor1);
 		
-		List<Prawnik> praw = prawnikManager.getAllPrawnik();
-		assertEquals(2, praw.size());
+		List<Monitor> monit = monitorManager.getAllMonitor();
+		assertEquals(2, monit.size());
 		
-		for (Prawnik prawnika : praw) {
-			if (prawnika.getId().equals(prawnik.getId())) {
-				assertEquals(IMIE,prawnika.getImie());
-				assertEquals(NAZWISKO,prawnika.getNazwisko());
-				assertEquals(WIEK,prawnika.getWiek());
+		for (Monitor monitory : monit) {
+			if (monitory.getId().equals(monitor.getId())) {
+				assertEquals(NAZWA,monitory.getNazwa());
+				assertEquals(RODZAJ,monitory.getRodzaj());
+				assertEquals(PRZEKATNA,monitory.getPrzekatna());
+				assertEquals(WAGA,monitory.getWaga());
 			}
 		}
 		
-		prawnik.setImie(NAZWISKO);
-		prawnik.setNazwisko(IMIE);
-		prawnikManager.editPrawnik(prawnik);
+		monitor.setNazwa(RODZAJ);
+		monitor.setRodzaj(NAZWA);
+		monitorManager.editMonitor(monitor);
 		
-		List<Prawnik> praw1 = prawnikManager.getAllPrawnik();
-		for (Prawnik prawnika : praw1) {
-			if (prawnika.getId().equals(prawnik.getId())) {
-				assertEquals(NAZWISKO,prawnika.getImie());
-				assertEquals(IMIE,prawnika.getNazwisko());
-				assertEquals(WIEK,prawnika.getWiek());
+		List<Monitor> monit1 = monitorManager.getAllMonitor();
+		for (Monitor monitory : monit1) {
+			if (monitory.getId().equals(monitor.getId())) {
+				assertEquals(RODZAJ,monitory.getNazwa());
+				assertEquals(NAZWA,monitory.getRodzaj());
+				assertEquals(PRZEKATNA,monitory.getPrzekatna());
+				assertEquals(WAGA,monitory.getWaga());
 			}
 		}
 		
-		assertNotSame(NAZWISKO,prawnik1.getImie());
-		assertNotSame(IMIE,prawnik1.getNazwisko());
+		assertNotSame(RODZAJ,monitor1.getNazwa());
+		assertNotSame(NAZWA,monitor1.getRodzaj());
 		
 		
 	}
