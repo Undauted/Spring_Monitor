@@ -29,18 +29,22 @@ public class Testy {
 	private final int PRZEKATNA=22;
 	private final int WAGA=3;
 	
-public void metoda()
+public int baza()
 {
-	for(int i=0;i<7;i++)
+	int liczba = 0;
+	for(int i=0;i<5;i++)
 	{
 	Monitor monitor = new Monitor();
-	monitor.setNazwa(NAZWA);
-	monitor.setRodzaj(RODZAJ);
-	monitor.setPrzekatna(PRZEKATNA);
-	monitor.setWaga(WAGA);
+	monitor.setNazwa(NAZWA+i);
+	monitor.setRodzaj(RODZAJ+i);
+	monitor.setPrzekatna(PRZEKATNA+i);
+	monitor.setWaga(WAGA+i);
 	
 	monitorManager.addMonitor(monitor);
+	liczba++;
 	}
+	
+	return liczba;
 }
 	
 	
@@ -48,7 +52,11 @@ public void metoda()
 	@Test
 	public void addMonitorCheck() {
 
-		metoda();
+		int liczba = baza();
+		
+		List<Monitor> monit1 = monitorManager.getAllMonitor();
+		assertEquals(liczba, monit1.size());
+		
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(NAZWA);
 		monitor.setRodzaj(RODZAJ);
@@ -56,6 +64,8 @@ public void metoda()
 		monitor.setWaga(WAGA);
 		
 		monitorManager.addMonitor(monitor);
+		
+		
 		
 		List<Monitor> monit = monitorManager.getAllMonitor();
 		for (Monitor monitory : monit) {
@@ -68,28 +78,34 @@ public void metoda()
 			}
 		}
 		
-		List<Monitor> praw = monitorManager.getAllMonitor();
-		assertEquals(8, praw.size());
+		List<Monitor> monit2 = monitorManager.getAllMonitor();
+		assertEquals(liczba+1, monit2.size());
 	}
 //-------------------USUWANIE MONITORA PO ID----------------------
 	@Test
 	public void deleteMonitorCheck() {
 		
-		metoda();
+		int liczba = baza();
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(NAZWA);
 		monitor.setRodzaj(RODZAJ);
 		monitor.setPrzekatna(PRZEKATNA);
 		monitor.setWaga(WAGA);
 		
+		List<Monitor> monit = monitorManager.getAllMonitor();
+		assertEquals(liczba, monit.size());
+		
 		monitorManager.addMonitor(monitor);
 
+		List<Monitor> monit1 = monitorManager.getAllMonitor();
+		assertEquals(liczba+1, monit1.size());
+		
 		monitorManager.deleteMonitor(monitor);
 		
 		assertNull(monitorManager.findMonitorById(monitor.getId()));
 		
-		List<Monitor> praw = monitorManager.getAllMonitor();
-		assertEquals(7, praw.size());
+		List<Monitor> monit2 = monitorManager.getAllMonitor();
+		assertEquals(liczba, monit2.size());
 //----------------------------------------------------------------------------------	
 		
 		Monitor monitor1 = new Monitor();
@@ -108,20 +124,20 @@ public void metoda()
 		
 		monitorManager.addMonitor(monitor2);
 		
-		List<Monitor> monit1 = monitorManager.getAllMonitor();
+		List<Monitor> monit3 = monitorManager.getAllMonitor();
 		
-		assertEquals(9, monit1.size());
+		assertEquals(liczba+2, monit3.size());
 		
 		monitorManager.deleteMonitor(monitor1);
 		assertNull(monitorManager.findMonitorById(monitor1.getId()));
 		
-		List<Monitor> praw2 = monitorManager.getAllMonitor();
-		assertEquals(8, praw2.size());
+		List<Monitor> monit4 = monitorManager.getAllMonitor();
+		assertEquals(liczba+1, monit4.size());
 		}
 //-------------------SZUKANIE JEDNEGO MONITORA PO ID--------------
 	@Test
 	public void findOneMonitorCheck() {
-		metoda();
+		int liczba = baza();;
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(NAZWA);
 		monitor.setRodzaj(RODZAJ);
@@ -130,20 +146,23 @@ public void metoda()
 		
 		monitorManager.addMonitor(monitor);
 		
+		List<Monitor> monit = monitorManager.getAllMonitor();
+		assertEquals(liczba+1, monit.size());
+		
 		assertNotNull(monitorManager.findMonitorById(monitor.getId()));	
 		
 		monitorManager.deleteMonitor(monitor);
 		
 		assertNull(monitorManager.findMonitorById(monitor.getId()));
 		
-		List<Monitor> praw = monitorManager.getAllMonitor();
-		assertEquals(7, praw.size());
+		List<Monitor> monit1 = monitorManager.getAllMonitor();
+		assertEquals(liczba, monit1.size());
 	}
 //-------------------SZUKANIE WSZYSTKICH MONITORÓW----------------
 	@Test
 	public void findAllMonitorCheck() {
 		
-		metoda();
+		int liczba = baza();
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(NAZWA);
 		monitor.setRodzaj(RODZAJ);
@@ -155,14 +174,18 @@ public void metoda()
 		List<Monitor> monit = monitorManager.getAllMonitor();
 		
 		assertNotNull(monit);
-		assertEquals(8, monit.size());
+		assertEquals(liczba+1, monit.size());
 		
 	}
 //-------------------EDYCJA MONITORA------------------------------
 	@Test
 	public void editMonitorCheck() {
 		
-		metoda();
+		int liczba = baza();
+		
+		List<Monitor> monit = monitorManager.getAllMonitor();
+		assertEquals(liczba, monit.size());
+		
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(NAZWA);
 		monitor.setRodzaj(RODZAJ);
@@ -170,6 +193,9 @@ public void metoda()
 		monitor.setWaga(WAGA);
 		
 		monitorManager.addMonitor(monitor);
+		
+		List<Monitor> monit1 = monitorManager.getAllMonitor();
+		assertEquals(liczba+1, monit1.size());
 		
 		Monitor monitor1 = new Monitor();
 		monitor1.setNazwa(NAZWA);
@@ -179,10 +205,10 @@ public void metoda()
 		
 		monitorManager.addMonitor(monitor1);
 		
-		List<Monitor> monit = monitorManager.getAllMonitor();
-		assertEquals(9, monit.size());
+		List<Monitor> monit2 = monitorManager.getAllMonitor();
+		assertEquals(liczba+2, monit2.size());
 		
-		for (Monitor monitory : monit) {
+		for (Monitor monitory : monit2) {
 			if (monitory.getId().equals(monitor.getId())) {
 				assertEquals(NAZWA,monitory.getNazwa());
 				assertEquals(RODZAJ,monitory.getRodzaj());
@@ -195,8 +221,8 @@ public void metoda()
 		monitor.setRodzaj(NAZWA);
 		monitorManager.editMonitor(monitor);
 		
-		List<Monitor> monit1 = monitorManager.getAllMonitor();
-		for (Monitor monitory : monit1) {
+		List<Monitor> monit3 = monitorManager.getAllMonitor();
+		for (Monitor monitory : monit3) {
 			if (monitory.getId().equals(monitor.getId())) {
 				assertEquals(RODZAJ,monitory.getNazwa());
 				assertEquals(NAZWA,monitory.getRodzaj());
@@ -208,8 +234,8 @@ public void metoda()
 		assertNotSame(RODZAJ,monitor1.getNazwa());
 		assertNotSame(NAZWA,monitor1.getRodzaj());
 		
-		List<Monitor> praw = monitorManager.getAllMonitor();
-		assertEquals(9, praw.size());
+		List<Monitor> monit4 = monitorManager.getAllMonitor();
+		assertEquals(liczba+2, monit4.size());
 	}
 	
 	}
