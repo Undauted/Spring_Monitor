@@ -29,12 +29,26 @@ public class Testy {
 	private final int PRZEKATNA=22;
 	private final int WAGA=3;
 	
+public void metoda()
+{
+	for(int i=0;i<7;i++)
+	{
+	Monitor monitor = new Monitor();
+	monitor.setNazwa(NAZWA);
+	monitor.setRodzaj(RODZAJ);
+	monitor.setPrzekatna(PRZEKATNA);
+	monitor.setWaga(WAGA);
+	
+	monitorManager.addMonitor(monitor);
+	}
+}
+	
 	
 //-------------------DODAWANIE MONITORA---------------------------
 	@Test
 	public void addMonitorCheck() {
 
-
+		metoda();
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(NAZWA);
 		monitor.setRodzaj(RODZAJ);
@@ -53,12 +67,15 @@ public class Testy {
 				
 			}
 		}
+		
+		List<Monitor> praw = monitorManager.getAllMonitor();
+		assertEquals(8, praw.size());
 	}
 //-------------------USUWANIE MONITORA PO ID----------------------
 	@Test
 	public void deleteMonitorCheck() {
 		
-		
+		metoda();
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(NAZWA);
 		monitor.setRodzaj(RODZAJ);
@@ -72,7 +89,7 @@ public class Testy {
 		assertNull(monitorManager.findMonitorById(monitor.getId()));
 		
 		List<Monitor> praw = monitorManager.getAllMonitor();
-		assertEquals(0, praw.size());
+		assertEquals(7, praw.size());
 //----------------------------------------------------------------------------------	
 		
 		Monitor monitor1 = new Monitor();
@@ -93,18 +110,18 @@ public class Testy {
 		
 		List<Monitor> monit1 = monitorManager.getAllMonitor();
 		
-		assertEquals(2, monit1.size());
+		assertEquals(9, monit1.size());
 		
 		monitorManager.deleteMonitor(monitor1);
 		assertNull(monitorManager.findMonitorById(monitor1.getId()));
 		
 		List<Monitor> praw2 = monitorManager.getAllMonitor();
-		assertEquals(1, praw2.size());
+		assertEquals(8, praw2.size());
 		}
 //-------------------SZUKANIE JEDNEGO MONITORA PO ID--------------
 	@Test
 	public void findOneMonitorCheck() {
-		
+		metoda();
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(NAZWA);
 		monitor.setRodzaj(RODZAJ);
@@ -118,11 +135,15 @@ public class Testy {
 		monitorManager.deleteMonitor(monitor);
 		
 		assertNull(monitorManager.findMonitorById(monitor.getId()));
+		
+		List<Monitor> praw = monitorManager.getAllMonitor();
+		assertEquals(7, praw.size());
 	}
 //-------------------SZUKANIE WSZYSTKICH MONITORÓW----------------
 	@Test
 	public void findAllMonitorCheck() {
 		
+		metoda();
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(NAZWA);
 		monitor.setRodzaj(RODZAJ);
@@ -134,13 +155,14 @@ public class Testy {
 		List<Monitor> monit = monitorManager.getAllMonitor();
 		
 		assertNotNull(monit);
-		assertEquals(1, monit.size());
+		assertEquals(8, monit.size());
 		
 	}
 //-------------------EDYCJA MONITORA------------------------------
 	@Test
 	public void editMonitorCheck() {
 		
+		metoda();
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(NAZWA);
 		monitor.setRodzaj(RODZAJ);
@@ -158,7 +180,7 @@ public class Testy {
 		monitorManager.addMonitor(monitor1);
 		
 		List<Monitor> monit = monitorManager.getAllMonitor();
-		assertEquals(2, monit.size());
+		assertEquals(9, monit.size());
 		
 		for (Monitor monitory : monit) {
 			if (monitory.getId().equals(monitor.getId())) {
@@ -186,7 +208,8 @@ public class Testy {
 		assertNotSame(RODZAJ,monitor1.getNazwa());
 		assertNotSame(NAZWA,monitor1.getRodzaj());
 		
-		
+		List<Monitor> praw = monitorManager.getAllMonitor();
+		assertEquals(9, praw.size());
 	}
 	
 	}
