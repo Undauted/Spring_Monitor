@@ -54,6 +54,12 @@ public class MonitorManagerHibernat implements MonitorManager {
 	public Monitor findMonitorById(Long id) {
 		return (Monitor) session.getCurrentSession().getNamedQuery("monitor.byId").setLong("id", id).uniqueResult();
 	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Monitor> findMonitorByRodzaj(String rodzaj) {
+		return session.getCurrentSession().getNamedQuery("monitor.byRodzaj").setString("rodzaj", rodzaj).list();
+	}
 
 	public void editMonitor(Monitor monitor)
 	{

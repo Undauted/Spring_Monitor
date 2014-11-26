@@ -17,7 +17,7 @@ import com.example.shdemo.domain.Monitor;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/beans.xml" })
-@TransactionConfiguration(transactionManager = "txManager", defaultRollback = true)
+@TransactionConfiguration(transactionManager = "txManager", defaultRollback = false)
 @Transactional
 public class Testy {
 
@@ -28,7 +28,7 @@ public class Testy {
 	private final String RODZAJ = "LED";
 	private final int PRZEKATNA=22;
 	private final int WAGA=3;
-	
+	static int Liczby=0;
 public int baza()
 {
 	int liczba = 0;
@@ -41,8 +41,11 @@ public int baza()
 	monitor.setWaga(WAGA+i);
 	
 	monitorManager.addMonitor(monitor);
-	liczba++;
+	
 	}
+	
+	List<Monitor> monit = monitorManager.getAllMonitor();
+	liczba=monit.size();
 	
 	return liczba;
 }
@@ -97,8 +100,6 @@ public int baza()
 		
 		monitorManager.addMonitor(monitor);
 
-		List<Monitor> monit1 = monitorManager.getAllMonitor();
-		assertEquals(liczba+1, monit1.size());
 		
 		monitorManager.deleteMonitor(monitor);
 		
@@ -124,9 +125,6 @@ public int baza()
 		
 		monitorManager.addMonitor(monitor2);
 		
-		List<Monitor> monit3 = monitorManager.getAllMonitor();
-		
-		assertEquals(liczba+2, monit3.size());
 		
 		monitorManager.deleteMonitor(monitor1);
 		assertNull(monitorManager.findMonitorById(monitor1.getId()));
@@ -145,9 +143,6 @@ public int baza()
 		monitor.setWaga(WAGA);
 		
 		monitorManager.addMonitor(monitor);
-		
-		List<Monitor> monit = monitorManager.getAllMonitor();
-		assertEquals(liczba+1, monit.size());
 		
 		assertNotNull(monitorManager.findMonitorById(monitor.getId()));	
 		
@@ -183,8 +178,7 @@ public int baza()
 		
 		int liczba = baza();
 		
-		List<Monitor> monit = monitorManager.getAllMonitor();
-		assertEquals(liczba, monit.size());
+		
 		
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(NAZWA);
@@ -206,8 +200,7 @@ public int baza()
 		monitorManager.addMonitor(monitor1);
 		
 		List<Monitor> monit2 = monitorManager.getAllMonitor();
-		assertEquals(liczba+2, monit2.size());
-		
+
 		for (Monitor monitory : monit2) {
 			if (monitory.getId().equals(monitor.getId())) {
 				assertEquals(NAZWA,monitory.getNazwa());
@@ -238,8 +231,26 @@ public int baza()
 		assertEquals(liczba+2, monit4.size());
 	}
 	
+	
+//-------------------SZUKANIE JEDNEGO MONITORA PO ID--------------
+	@Test
+	public void findOneMonitorbyRodzajCheck() {
+		int liczba = baza();;
+		Monitor monitor = new Monitor();
+		monitor.setNazwa(NAZWA);
+		monitor.setRodzaj(RODZAJ);
+		monitor.setPrzekatna(PRZEKATNA);
+		monitor.setWaga(WAGA);
+		
+		monitorManager.addMonitor(monitor);
+		
+		assertNotNull(monitorManager.findMonitorByRodzaj(monitor.getRodzaj()));	
+		
+		List<Monitor> monit1 = monitorManager.getAllMonitor();
+		assertEquals(liczba+1, monit1.size());
 	}
-
+	
+}
 	
 
 

@@ -15,6 +15,8 @@ public interface MonitorManager {
 	
 	Monitor findMonitorById(Long id);
 	
+	List<Monitor> findMonitorByRodzaj(String rodzaj);
+	
 	void editMonitor(Monitor monitor);
 
 }
