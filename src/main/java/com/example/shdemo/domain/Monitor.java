@@ -1,20 +1,27 @@
 package com.example.shdemo.domain;
 
+
+
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+
 import javax.persistence.Table;
+
+
 
 @Entity
 @Table(name="Monitor")
 @NamedQueries({ 
-	@NamedQuery(name = "monitor.all", query = "Select p from Monitor p"),
-	@NamedQuery(name = "monitor.byId", query = "Select p from Monitor p where p.id = :id"),
-	@NamedQuery(name = "monitor.byRodzaj", query = "Select p from Monitor p where p.rodzaj = :rodzaj")
+	@NamedQuery(name = "monitor.all", query = "Select m from Monitor m"),
+	@NamedQuery(name = "monitor.byId", query = "Select m from Monitor m where m.id = :id"),
+	@NamedQuery(name = "monitor.byRodzaj", query = "Select m from Monitor m where m.rodzaj = :rodzaj")
 })
 public class Monitor {
 
@@ -34,6 +41,8 @@ public class Monitor {
     
     @Column(name="Waga")
     private int waga;
+    
+    
     
     public Long getId() {
 		return id;
@@ -74,6 +83,8 @@ public class Monitor {
     public void setWaga(int waga) {
 		this.waga = waga;
 	}
+    
+   
 }
 
 	
